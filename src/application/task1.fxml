@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="748.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
+    <children>
+        <GridPane layoutX="822.0" layoutY="46.0" prefHeight="361.0" prefWidth="173.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="175.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="84.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="178.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="211.0" minHeight="0.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="162.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="162.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="pButtonBuy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBuyAction" prefHeight="31.0" prefWidth="185.0" text="Buy" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                    <GridPane.margin>
+                        <Insets top="40.0" />
+                    </GridPane.margin></Button>
+                <Button fx:id="pButtonSell" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSellAction" prefHeight="0.0" prefWidth="173.0" text="Sell" textAlignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                    <GridPane.margin>
+                        <Insets top="15.0" />
+                    </GridPane.margin></Button>
+                <Label alignment="CENTER" prefHeight="0.0" prefWidth="173.0" text="Current Price" textAlignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                    <padding>
+                        <Insets top="2.0" />
+                    </padding>
+                    <GridPane.margin>
+                        <Insets top="10.0" />
+                    </GridPane.margin></Label>
+                <TextField fx:id="pTextFieldPrice" alignment="CENTER" editable="false" prefHeight="13.0" prefWidth="173.0" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                    <GridPane.margin>
+                        <Insets top="20.0" />
+                    </GridPane.margin></TextField>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="180.0" text="Product" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                    <padding>
+                        <Insets top="2.0" />
+                    </padding>
+                </Label>
+                <ChoiceBox fx:id="pChoiceBox" prefHeight="31.0" prefWidth="179.0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                <TextField fx:id="pTextFieldBuy" alignment="CENTER" text="0" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets bottom="20.0" />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="pTextFieldSell" alignment="CENTER" text="0" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <GridPane.margin>
+                        <Insets top="15.0" />
+                    </GridPane.margin>
+                </TextField>
+                <Button fx:id="pButtonSkip" mnemonicParsing="false" onAction="#buttonSkipAction" prefHeight="15.0" prefWidth="173.0" text=" Skip" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets top="30.0" />
+                    </GridPane.margin>
+                </Button>
+            </children>
+        </GridPane>
+        <Pane layoutX="14.0" layoutY="593.0" prefHeight="109.0" prefWidth="603.0">
+            <children>
+                <TextField fx:id="pTextFieldBrentQuantity" alignment="CENTER" editable="false" layoutX="196.0" layoutY="24.0" prefHeight="31.0" prefWidth="64.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" prefHeight="21.0" prefWidth="186.0" text="Product" textAlignment="CENTER" />
+                <Label alignment="CENTER" layoutY="29.0" prefHeight="21.0" prefWidth="186.0" text="Brent" />
+                <Label alignment="CENTER" layoutY="66.0" prefHeight="21.0" prefWidth="186.0" text="Fuel Oil" />
+                <TextField fx:id="pTextFieldFuelOilQuantity" alignment="CENTER" editable="false" layoutX="196.0" layoutY="61.0" prefHeight="31.0" prefWidth="64.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="1.0" prefHeight="21.0" prefWidth="186.0" text=" Quantity" textAlignment="CENTER" />
+                <Label layoutX="384.0" layoutY="51.0" text="Money" />
+                <TextField fx:id="pTextFieldMoney" alignment="CENTER" editable="false" layoutX="448.0" layoutY="46.0" prefHeight="31.0" prefWidth="85.0" />
+            </children>
+        </Pane>
+        <Pane layoutY="39.0" prefHeight="488.0" prefWidth="756.0">
+            <children>
+                <LineChart prefHeight="551.0" prefWidth="766.0" title="Brent">
+                    <xAxis>
+                        <CategoryAxis label="Time" side="BOTTOM" startMargin="0.0" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Price" side="LEFT" />
+                    </yAxis>
+                </LineChart>
+            </children></Pane>
+    </children>
+</AnchorPane>
