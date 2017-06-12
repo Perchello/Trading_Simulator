@@ -3,147 +3,112 @@ package application;
 import java.util.Random;
 
 public class Test1 {
-    private int pBrentPrice;
-    private int pFuelOilPrice;
-    private int pBrentQuantity;
-    private int pFuelOilQuantity;
-    private int pTotalBoughtBrentValue;
-    private int pTotalBoughtFuelOilValue;
-    private int pAverageBrentPrice;
-    private int pAverageFuelOilPrice;
     private int pMoney;
     private int pTurn;
+    private Product mProductBrent;
+    private Product mProductFuelOil;
 
     public void startTest (){
-        setBrentPrice(90);
-        setFuelOilPrice(200);
-        setBrentQuantity (0);
-        setFuelOilQuantity (0);
+        mProductBrent = new Product("Brent");
+        mProductFuelOil = new Product("Fuel Oil");
+
         setMoney(0);
         setTurn(1);
-        setTotalBoughtBrentValue(0);
-        setTotalBoughtFuelOilValue(0);
-        setAverageBrentPrice(0);
-        setAverageFuelOilPrice(0);
+
 
     }
 
     public void buyBrent (int quantity){
-        if (pBrentQuantity<=0 && -pBrentQuantity<quantity){
-            setTotalBoughtBrentValue ((pBrentQuantity+quantity)*pBrentPrice);
+        if (mProductBrent.getQuantity()<=0 && -mProductBrent.getQuantity()<quantity){
+            mProductBrent.setTotalValue((mProductBrent.getQuantity()+quantity)*mProductBrent.getPrice());
         } else {
-            setTotalBoughtBrentValue (pTotalBoughtBrentValue + quantity*pBrentPrice);
+            mProductBrent.setTotalValue (mProductBrent.getTotalValue() + quantity*mProductBrent.getPrice());
         }
-        pBrentQuantity +=quantity;
-        pMoney -=quantity*pBrentPrice;
-        if (pBrentQuantity==0){
-            setAverageBrentPrice(0);
+        mProductBrent.setQuantity(quantity);
+        pMoney -=quantity*mProductBrent.getPrice();
+        if (mProductBrent.getQuantity()==0){
+            mProductBrent.setAvgPrice(0);
         } else {
-            setAverageBrentPrice(pTotalBoughtBrentValue/pBrentQuantity);
+            mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
         }
     }
     public void sellBrent (int quantity){
-        if(quantity <= pBrentQuantity) {
-            if (pBrentQuantity >= 0 && pBrentQuantity < quantity) {
-                setTotalBoughtBrentValue((pBrentQuantity - quantity) * pBrentPrice);
+        if(quantity <= mProductBrent.getQuantity()) {
+            if (mProductBrent.getQuantity() >= 0 && mProductBrent.getQuantity() < quantity) {
+                mProductBrent.setTotalValue((mProductBrent.getQuantity() - quantity) * mProductBrent.getPrice());
             } else {
-                setTotalBoughtBrentValue(pTotalBoughtBrentValue - quantity * pBrentPrice);
+                mProductBrent.setTotalValue(mProductBrent.getTotalValue() - quantity * mProductBrent.getPrice());
             }
-            pBrentQuantity -= quantity;
-            pMoney += quantity * pBrentPrice;
-            if (pBrentQuantity == 0) {
-                setAverageBrentPrice(0);
+            mProductBrent.setQuantity(-quantity);
+            pMoney += quantity * mProductBrent.getPrice();
+            if (mProductBrent.getQuantity() == 0) {
+                mProductBrent.setAvgPrice(0);
             } else {
-                setAverageBrentPrice(pTotalBoughtBrentValue / pBrentQuantity);
+                mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
             }
         }
     }
 
     public void buyFuelOil (int quantity){
-        if (pFuelOilQuantity<=0 && -pFuelOilQuantity<quantity){
-            setTotalBoughtFuelOilValue ((pFuelOilQuantity+quantity)*pFuelOilPrice);
+        if (mProductFuelOil.getQuantity()<=0 && -mProductFuelOil.getQuantity()<quantity){
+            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()+quantity)*mProductFuelOil.getPrice());
         } else {
-            setTotalBoughtFuelOilValue (pTotalBoughtFuelOilValue + quantity*pFuelOilPrice);
+            mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue() + quantity*mProductFuelOil.getPrice());
         }
-        pFuelOilQuantity +=quantity;
-        pMoney -=quantity*pFuelOilPrice;
+        mProductFuelOil.setQuantity(quantity);
+        pMoney -=quantity*mProductFuelOil.getPrice();
 
-        if (pFuelOilQuantity==0){
-            setAverageFuelOilPrice(0);
+        if (mProductFuelOil.getQuantity()==0){
+            mProductFuelOil.setAvgPrice(0);
         } else {
-            setAverageFuelOilPrice(pTotalBoughtFuelOilValue/pFuelOilQuantity);
+            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
 
         }
     }
 
     public void sellFuelOil (int quantity) {
-        if (quantity <= pFuelOilQuantity) {
-            if (pFuelOilQuantity >= 0 && pFuelOilQuantity < quantity) {
-                setTotalBoughtFuelOilValue((pFuelOilQuantity - quantity) * pFuelOilPrice);
+        if (quantity <= mProductFuelOil.getQuantity()) {
+            if (mProductFuelOil.getQuantity() >= 0 && mProductFuelOil.getQuantity() < quantity) {
+                mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity() - quantity) * mProductFuelOil.getPrice());
             } else {
-                setTotalBoughtFuelOilValue(pTotalBoughtFuelOilValue - quantity * pFuelOilPrice);
+                mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue() - quantity * mProductFuelOil.getPrice());
             }
 
-            pFuelOilQuantity -= quantity;
-            pMoney += quantity * pFuelOilPrice;
+            mProductFuelOil.setQuantity(-quantity);
+            pMoney += quantity * mProductFuelOil.getPrice();
 
-            if (pFuelOilQuantity == 0) {
-                setAverageFuelOilPrice(0);
+            if (mProductFuelOil.getQuantity() == 0) {
+                mProductFuelOil.setAvgPrice(0);
             } else {
-                setAverageFuelOilPrice(pTotalBoughtFuelOilValue / pFuelOilQuantity);
+                mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / mProductFuelOil.getQuantity());
             }
         }
     }
 
 
     public void changePrice (){
-        pBrentPrice += new Random().nextInt(10)-5;
-        pFuelOilPrice +=new Random().nextInt(20)-10;
-    }
-    public void setBrentPrice (int amount){
-        pBrentPrice=amount;
+        mProductBrent.setPrice(new Random().nextInt(10)-5);
+        mProductFuelOil.setPrice(new Random().nextInt(10)-5);
     }
 
     public double getBrentPrice (){
-        return pBrentPrice;
-    }
-
-    public void setFuelOilPrice(int amount){
-        pFuelOilPrice= amount;
+        return mProductBrent.getPrice();
     }
 
     public double getFuelOilPrice (){
-        return pFuelOilPrice;
-    }
-
-    public void setBrentQuantity(int amount){
-        pBrentQuantity=amount;
+        return mProductFuelOil.getPrice();
     }
 
     public int getBrentQuantity (){
-        return pBrentQuantity;
-    }
-
-    public void setFuelOilQuantity(int amount){
-        pFuelOilQuantity=amount;
+        return mProductBrent.getQuantity();
     }
 
     public int getFuelOilQuantity (){
-        return pFuelOilQuantity;
-    }
-
-    public void testStart(){
+        return mProductFuelOil.getQuantity();
     }
 
     public void setMoney (int value) {
         pMoney = value;
-    }
-
-    public void addMoney (int amount){
-        pMoney += amount;
-    }
-    public void removeMoney (int amount){
-        pMoney -= amount;
     }
 
     public int getMoney (){
@@ -161,35 +126,20 @@ public class Test1 {
         pTurn+=1;
     }
 
-    public int getTotalBoughtFuelOilValue() {
-        return pTotalBoughtFuelOilValue;
-    }
-
-    public void setTotalBoughtFuelOilValue(int pTotalBoughtFuelOilValue) {
-        this.pTotalBoughtFuelOilValue = pTotalBoughtFuelOilValue;
-    }
-
-    public int getTotalBoughtBrentValue() {
-        return pTotalBoughtBrentValue;
-    }
-
-    public void setTotalBoughtBrentValue(int pTotalBoughtBrentValue) {
-        this.pTotalBoughtBrentValue = pTotalBoughtBrentValue;
-    }
 
     public int getAverageBrentPrice() {
-        return pAverageBrentPrice;
-    }
-
-    public void setAverageBrentPrice(int pAverageBrentPrice) {
-        this.pAverageBrentPrice = pAverageBrentPrice;
+        return mProductBrent.getAvgPrice();
     }
 
     public int getAverageFuelOilPrice() {
-        return pAverageFuelOilPrice;
+        return mProductFuelOil.getAvgPrice();
+    }
+    public Product getProductBrent (){
+        return mProductBrent;
     }
 
-    public void setAverageFuelOilPrice(int pAverageFuelOilPrice) {
-        this.pAverageFuelOilPrice = pAverageFuelOilPrice;
+    public Product getProductFuelOil(){
+        return mProductFuelOil;
     }
+
 }

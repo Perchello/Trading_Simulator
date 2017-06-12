@@ -102,11 +102,11 @@
                     </yAxis>
                 </LineChart>
             </children></Pane>
-      <TableView fx:id="pTableViewProducts" layoutX="822.0" layoutY="520.0" prefHeight="177.0" prefWidth="432.0">
+      <TableView fx:id="pTableViewProduct" layoutX="822.0" layoutY="520.0" prefHeight="177.0" prefWidth="432.0">
         <columns>
-          <TableColumn fx:id="pColumnProduct" prefWidth="97.0" text="Product" />
-          <TableColumn fx:id="pColumnQuantity" prefWidth="87.0" text="Quantity" />
-            <TableColumn fx:id="pColumnAvg" prefWidth="88.0" text="Avg Price" />
+          <TableColumn fx:id="pColumnProductName" prefWidth="97.0" text="Product" />
+          <TableColumn fx:id="pColumnProductQuantity" prefWidth="87.0" text="Quantity" />
+            <TableColumn fx:id="pColumnProductAvgPrice" prefWidth="88.0" text="Avg Price" />
         </columns>
       </TableView>
     </children>

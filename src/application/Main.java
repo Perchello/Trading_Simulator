@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -55,9 +56,18 @@ public class Main extends Application {
     private XYChart.Series<String, Number> pChartBrent;
     @FXML
     private XYChart.Series<String, Number> pChartFuelOil;
+    @FXML
+    private TableView<Product> pTableViewProduct;
+    @FXML
+    private TableColumn<Product, String> pColumnProductName;
+    @FXML
+    private TableColumn<Product, String> pColumnProductQuantity;
+    @FXML
+    private TableColumn<Product, String> pColumnProductAvgPrice;
+
 
     ObservableList <String> pChoiceBoxOptions = FXCollections.observableArrayList("Brent", "Fuel Oil");
-
+    ObservableList <Product> pObsListProducts;
 
     @Override
     public void start(Stage stage) {
@@ -84,6 +94,8 @@ public class Main extends Application {
         pChartFuelOil = new XYChart.Series<>();
         pTest1 = new Test1();
         pTest1.startTest();
+        //Test
+        pObsListProducts = FXCollections.observableArrayList(pTest1.getProductBrent(), pTest1.getProductFuelOil());
         pChoiceBox.setItems(pChoiceBoxOptions);
         pChoiceBox.setValue("Brent");
         pTextFieldPrice.setText(""+pTest1.getBrentPrice());
@@ -98,6 +110,10 @@ public class Main extends Application {
         pChartFuelOil.setName("Fuel Oil");
         pLineChart.getData().add(pChartBrent);
         pLineChart.getData().add(pChartFuelOil);
+        pTableViewProduct.itemsProperty().setValue(pObsListProducts);
+        pColumnProductName.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getName()));
+        pColumnProductQuantity.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getQuantity()));
+        pColumnProductAvgPrice.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getAvgPrice()));
 
 
         pTextFieldBuy.textProperty().addListener(new ChangeListener<String>() {
