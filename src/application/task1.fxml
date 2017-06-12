@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="748.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
     <children>
         <GridPane layoutX="822.0" layoutY="46.0" prefHeight="361.0" prefWidth="173.0">
             <columnConstraints>
@@ -67,7 +69,7 @@
                         <Insets top="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <Button fx:id="pButtonSkip" mnemonicParsing="false" onAction="#buttonSkipAction" prefHeight="15.0" prefWidth="173.0" text=" Skip" GridPane.rowIndex="5">
+                <Button fx:id="pButtonNextStage" mnemonicParsing="false" onAction="#buttonNextStageAction" prefHeight="15.0" prefWidth="173.0" text=" Skip" GridPane.rowIndex="5">
                     <GridPane.margin>
                         <Insets top="30.0" />
                     </GridPane.margin>
@@ -82,13 +84,16 @@
                 <Label alignment="CENTER" layoutY="66.0" prefHeight="21.0" prefWidth="186.0" text="Fuel Oil" />
                 <TextField fx:id="pTextFieldFuelOilQuantity" alignment="CENTER" editable="false" layoutX="196.0" layoutY="61.0" prefHeight="31.0" prefWidth="64.0" />
                 <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="1.0" prefHeight="21.0" prefWidth="186.0" text=" Quantity" textAlignment="CENTER" />
-                <Label layoutX="384.0" layoutY="51.0" text="Money" />
-                <TextField fx:id="pTextFieldMoney" alignment="CENTER" editable="false" layoutX="448.0" layoutY="46.0" prefHeight="31.0" prefWidth="85.0" />
+                <Label layoutX="445.0" layoutY="51.0" text="Money" />
+                <TextField fx:id="pTextFieldMoney" alignment="CENTER" editable="false" layoutX="497.0" layoutY="46.0" prefHeight="31.0" prefWidth="85.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="291.0" layoutY="1.0" prefHeight="21.0" prefWidth="121.0" text=" Ave Price" textAlignment="CENTER" />
+            <TextField fx:id="pTextFieldBrentAvePrice" alignment="CENTER" editable="false" layoutX="320.0" layoutY="24.0" prefHeight="31.0" prefWidth="64.0" />
+            <TextField fx:id="pTextFieldFuelOilAvePrice" alignment="CENTER" editable="false" layoutX="320.0" layoutY="62.0" prefHeight="31.0" prefWidth="64.0" />
             </children>
         </Pane>
         <Pane layoutY="39.0" prefHeight="488.0" prefWidth="756.0">
             <children>
-                <LineChart prefHeight="551.0" prefWidth="766.0" title="Brent">
+                <LineChart fx:id="pLineChart" prefHeight="551.0" prefWidth="766.0" title="Brent">
                     <xAxis>
                         <CategoryAxis label="Time" side="BOTTOM" startMargin="0.0" />
                     </xAxis>
@@ -97,5 +102,12 @@
                     </yAxis>
                 </LineChart>
             </children></Pane>
+      <TableView fx:id="pTableViewProducts" layoutX="822.0" layoutY="520.0" prefHeight="177.0" prefWidth="432.0">
+        <columns>
+          <TableColumn fx:id="pColumnProduct" prefWidth="97.0" text="Product" />
+          <TableColumn fx:id="pColumnQuantity" prefWidth="87.0" text="Quantity" />
+            <TableColumn fx:id="pColumnAvg" prefWidth="88.0" text="Avg Price" />
+        </columns>
+      </TableView>
     </children>
 </AnchorPane>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Trading Simulator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Trading_Simulator_jar</output-path>
+    <root id="archive" name="Trading Simulator.jar">
+      <element id="module-output" name="Trading Simulator" />
+    </root>
+  </artifact>
+</component>
