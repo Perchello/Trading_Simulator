@@ -7,14 +7,17 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
     <children>
@@ -31,15 +34,15 @@
                 <RowConstraints maxHeight="162.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="pButtonBuy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBuyAction" prefHeight="31.0" prefWidth="185.0" text="Buy" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                <Button fx:id="pButtonBuy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBuyAction" prefHeight="31.0" prefWidth="185.0" text="Купить" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets top="40.0" />
                     </GridPane.margin></Button>
-                <Button fx:id="pButtonSell" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSellAction" prefHeight="0.0" prefWidth="173.0" text="Sell" textAlignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                <Button fx:id="pButtonSell" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSellAction" prefHeight="0.0" prefWidth="173.0" text="Продать" textAlignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets top="15.0" />
                     </GridPane.margin></Button>
-                <Label alignment="CENTER" prefHeight="0.0" prefWidth="173.0" text="Current Price" textAlignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <Label alignment="CENTER" prefHeight="0.0" prefWidth="173.0" text="Текущая цена" textAlignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                     <padding>
                         <Insets top="2.0" />
                     </padding>
@@ -50,7 +53,7 @@
                     <GridPane.margin>
                         <Insets top="20.0" />
                     </GridPane.margin></TextField>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="180.0" text="Product" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="180.0" text="Выбор продукта" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <padding>
                         <Insets top="2.0" />
                     </padding>
@@ -69,45 +72,52 @@
                         <Insets top="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <Button fx:id="pButtonNextStage" mnemonicParsing="false" onAction="#buttonNextStageAction" prefHeight="15.0" prefWidth="173.0" text=" Skip" GridPane.rowIndex="5">
+                <Button fx:id="pButtonNextStage" mnemonicParsing="false" onAction="#buttonNextStageAction" prefHeight="15.0" prefWidth="173.0" text=" Следующий ход" GridPane.rowIndex="5">
                     <GridPane.margin>
                         <Insets top="30.0" />
                     </GridPane.margin>
                 </Button>
             </children>
         </GridPane>
-        <Pane layoutX="14.0" layoutY="593.0" prefHeight="109.0" prefWidth="603.0">
-            <children>
-                <TextField fx:id="pTextFieldBrentQuantity" alignment="CENTER" editable="false" layoutX="196.0" layoutY="24.0" prefHeight="31.0" prefWidth="64.0" />
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" prefHeight="21.0" prefWidth="186.0" text="Product" textAlignment="CENTER" />
-                <Label alignment="CENTER" layoutY="29.0" prefHeight="21.0" prefWidth="186.0" text="Brent" />
-                <Label alignment="CENTER" layoutY="66.0" prefHeight="21.0" prefWidth="186.0" text="Fuel Oil" />
-                <TextField fx:id="pTextFieldFuelOilQuantity" alignment="CENTER" editable="false" layoutX="196.0" layoutY="61.0" prefHeight="31.0" prefWidth="64.0" />
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="1.0" prefHeight="21.0" prefWidth="186.0" text=" Quantity" textAlignment="CENTER" />
-                <Label layoutX="445.0" layoutY="51.0" text="Money" />
-                <TextField fx:id="pTextFieldMoney" alignment="CENTER" editable="false" layoutX="497.0" layoutY="46.0" prefHeight="31.0" prefWidth="85.0" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="291.0" layoutY="1.0" prefHeight="21.0" prefWidth="121.0" text=" Ave Price" textAlignment="CENTER" />
-            <TextField fx:id="pTextFieldBrentAvePrice" alignment="CENTER" editable="false" layoutX="320.0" layoutY="24.0" prefHeight="31.0" prefWidth="64.0" />
-            <TextField fx:id="pTextFieldFuelOilAvePrice" alignment="CENTER" editable="false" layoutX="320.0" layoutY="62.0" prefHeight="31.0" prefWidth="64.0" />
-            </children>
+        <Pane layoutX="70.0" layoutY="638.0" prefHeight="158.0" prefWidth="692.0">
+         <children>
+            <TableView fx:id="pTableViewProduct" layoutY="3.0" prefHeight="116.0" prefWidth="692.0">
+              <columns>
+                <TableColumn fx:id="pColumnProductName" editable="false" prefWidth="161.0" text="Название продукта" />
+                <TableColumn fx:id="pColumnProductQuantity" editable="false" prefWidth="102.0" text="Количество" />
+                  <TableColumn fx:id="pColumnProductAvgPrice" editable="false" prefWidth="130.0" text="Средняя цена" />
+              </columns>
+            </TableView>
+         </children>
         </Pane>
-        <Pane layoutY="39.0" prefHeight="488.0" prefWidth="756.0">
+        <Pane layoutY="39.0" prefHeight="558.0" prefWidth="756.0">
             <children>
-                <LineChart fx:id="pLineChart" prefHeight="551.0" prefWidth="766.0" title="Brent">
+                <LineChart fx:id="pLineChart" animated="false" prefHeight="551.0" prefWidth="766.0" title="Нефть и нефтепродукты">
                     <xAxis>
-                        <CategoryAxis label="Time" side="BOTTOM" startMargin="0.0" />
+                        <CategoryAxis label="Время" side="BOTTOM" startMargin="0.0" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis label="Price" side="LEFT" />
+                        <NumberAxis forceZeroInRange="false" label="Цена" lowerBound="80.0" side="LEFT" tickLabelGap="5.0" tickUnit="50.0" upperBound="120.0" />
                     </yAxis>
                 </LineChart>
             </children></Pane>
-      <TableView fx:id="pTableViewProduct" layoutX="822.0" layoutY="520.0" prefHeight="177.0" prefWidth="432.0">
-        <columns>
-          <TableColumn fx:id="pColumnProductName" prefWidth="97.0" text="Product" />
-          <TableColumn fx:id="pColumnProductQuantity" prefWidth="87.0" text="Quantity" />
-            <TableColumn fx:id="pColumnProductAvgPrice" prefWidth="88.0" text="Avg Price" />
-        </columns>
-      </TableView>
+      <FlowPane alignment="CENTER" layoutX="71.0" layoutY="589.0" prefHeight="52.0" prefWidth="692.0">
+         <children>
+                <Label alignment="CENTER" text="Деньги">
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+                <TextField fx:id="pTextFieldMoney" alignment="CENTER" editable="false" prefHeight="31.0" prefWidth="85.0" />
+         </children>
+      </FlowPane>
+      <Pane layoutX="809.0" layoutY="559.0" prefHeight="208.0" prefWidth="448.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="448.0" text="Новости" textAlignment="CENTER" />
+            <ListView layoutY="21.0" prefHeight="187.0" prefWidth="448.0" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

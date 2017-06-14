@@ -39,14 +39,6 @@ public class Main extends Application {
     @FXML
     private ChoiceBox pChoiceBox;
     @FXML
-    private TextField pTextFieldBrentQuantity;
-    @FXML
-    private TextField pTextFieldBrentAvePrice;
-    @FXML
-    private TextField pTextFieldFuelOilAvePrice;
-    @FXML
-    private TextField pTextFieldFuelOilQuantity;
-    @FXML
     private TextField pTextFieldMoney;
     @FXML
     private TextField pTextFieldPrice;
@@ -66,7 +58,7 @@ public class Main extends Application {
     private TableColumn<Product, String> pColumnProductAvgPrice;
 
 
-    ObservableList <String> pChoiceBoxOptions = FXCollections.observableArrayList("Brent", "Fuel Oil");
+    ObservableList <String> pChoiceBoxOptions;
     ObservableList <Product> pObsListProducts;
 
     @Override
@@ -96,20 +88,16 @@ public class Main extends Application {
         pTest1.startTest();
         //Test
         pObsListProducts = FXCollections.observableArrayList(pTest1.getProductBrent(), pTest1.getProductFuelOil());
+        pChoiceBoxOptions = FXCollections.observableArrayList(pTest1.getProductBrent().getName(), pTest1.getProductFuelOil().getName());
         pChoiceBox.setItems(pChoiceBoxOptions);
-        pChoiceBox.setValue("Brent");
+        pChoiceBox.setValue(pTest1.getProductBrent().getName());
         pTextFieldPrice.setText(""+pTest1.getBrentPrice());
-        pTextFieldBrentQuantity.setText("" +pTest1.getBrentQuantity());
-        pTextFieldFuelOilQuantity.setText("" +pTest1.getFuelOilQuantity());
-        pTextFieldBrentAvePrice.setText("" +pTest1.getAverageBrentPrice());
-        pTextFieldFuelOilAvePrice.setText("" +pTest1.getAverageFuelOilPrice());
         pTextFieldMoney.setText(""+ pTest1.getMoney());
         pChartBrent.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
         pChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
-        pChartBrent.setName("Brent");
-        pChartFuelOil.setName("Fuel Oil");
+        pChartBrent.setName(pTest1.getProductBrent().getName());
+        pChartFuelOil.setName(pTest1.getProductFuelOil().getName());
         pLineChart.getData().add(pChartBrent);
-        pLineChart.getData().add(pChartFuelOil);
         pTableViewProduct.itemsProperty().setValue(pObsListProducts);
         pColumnProductName.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getName()));
         pColumnProductQuantity.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getQuantity()));
@@ -143,10 +131,16 @@ public class Main extends Application {
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
                 if (pChoiceBox.getItems().get((Integer) number2)=="Brent"){
                     pTextFieldPrice.setText(""+pTest1.getBrentPrice());
+                    pLineChart.getData().remove(pChartFuelOil);
+                    pLineChart.getData().add(pChartBrent);
+
+
 
                 }
                 else if (pChoiceBox.getItems().get((Integer) number2)=="Fuel Oil"){
                     pTextFieldPrice.setText(""+pTest1.getFuelOilPrice());
+                    pLineChart.getData().remove(pChartBrent);
+                    pLineChart.getData().add(pChartFuelOil);
 
                 }
             }
@@ -159,44 +153,26 @@ public class Main extends Application {
     public void buttonBuyAction (){
         if (pChoiceBox.getValue()=="Brent"){
             pTest1.buyBrent(Integer.parseInt(pTextFieldBuy.getText()));
-            pTextFieldBrentQuantity.setText(""+pTest1.getBrentQuantity());
-            pTextFieldBrentAvePrice.setText("" +pTest1.getAverageBrentPrice());
-
-
         }
         else if (pChoiceBox.getValue()=="Fuel Oil"){
             pTest1.buyFuelOil(Integer.parseInt(pTextFieldBuy.getText()));
-            pTextFieldFuelOilQuantity.setText(""+pTest1.getFuelOilQuantity());
-            pTextFieldFuelOilAvePrice.setText("" +pTest1.getAverageFuelOilPrice());
-
         }
         pTextFieldMoney.setText(""+pTest1.getMoney());
-
-
-        System.out.println("Price is " +pTest1.getBrentPrice());
-        System.out.println("I bought " + pChoiceBox.getValue());
-        System.out.println(pTextFieldBuy.getText());
+        pTableViewProduct.refresh();
     }
 
     @FXML
     public void buttonSellAction (){
         if (pChoiceBox.getValue()=="Brent"){
             pTest1.sellBrent(Integer.parseInt(pTextFieldSell.getText()));
-            pTextFieldBrentQuantity.setText(""+pTest1.getBrentQuantity());
-            pTextFieldBrentAvePrice.setText("" +pTest1.getAverageBrentPrice());
-
         }
         else if (pChoiceBox.getValue()=="Fuel Oil"){
             pTest1.sellFuelOil(Integer.parseInt(pTextFieldSell.getText()));
-            pTextFieldFuelOilQuantity.setText(""+pTest1.getFuelOilQuantity());
-            pTextFieldFuelOilAvePrice.setText("" +pTest1.getAverageFuelOilPrice());
 
         }
         pTextFieldMoney.setText(""+pTest1.getMoney());
+        pTableViewProduct.refresh();
 
-        System.out.println("Price is " +pTest1.getBrentPrice());
-        System.out.println("I bought " + pChoiceBox.getValue());
-        System.out.println(pTextFieldBuy.getText());
     }
 
     @FXML
@@ -214,6 +190,7 @@ public class Main extends Application {
         pTest1.nextTurn();
         pChartBrent.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
         pChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
+        pTableViewProduct.refresh();
 
 
     }

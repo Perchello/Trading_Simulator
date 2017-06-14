@@ -5,10 +5,11 @@ package application;
  */
 public class Product {
     private String mName;
-    private int mPrice;
+    private Price mPrice;
     private int mQuantity;
-    private int mTotalValue;
-    private int mAvgPrice;
+    private double mTotalValue;
+    private double mAvgPrice;
+    private double mCurrentPrice;
 
 
     public Product(String name) {
@@ -17,9 +18,11 @@ public class Product {
         mTotalValue = 0;
         mAvgPrice = 0;
         if (name == "Brent"){
-            mPrice = 100;
+            mCurrentPrice =100;
+            mPrice = new Price (mCurrentPrice, mName);
         } else if  (name == "Fuel Oil"){
-            mPrice = 200;
+            mCurrentPrice =200;
+            mPrice = new Price (mCurrentPrice, mName);
         }
     }
 
@@ -39,27 +42,28 @@ public class Product {
         this.mQuantity += quantity;
     }
 
-    public int getPrice() {
-        return mPrice;
+    public double getPrice() {
+        return mCurrentPrice;
     }
 
-    public void setPrice(int mPrice) {
-        this.mPrice += mPrice;
+    public void changePrice() {
+        mPrice.changePrice();
+        mCurrentPrice=mPrice.getPrice();
     }
 
-    public int getTotalValue() {
+    public double getTotalValue() {
         return mTotalValue;
     }
 
-    public void setTotalValue(int mTotalValue) {
+    public void setTotalValue(double mTotalValue) {
         this.mTotalValue = mTotalValue;
     }
 
-    public int getAvgPrice() {
+    public double getAvgPrice() {
         return mAvgPrice;
     }
 
-    public void setAvgPrice(int mAvgPrice) {
+    public void setAvgPrice(double mAvgPrice) {
         this.mAvgPrice = mAvgPrice;
     }
 }

@@ -87,8 +87,8 @@ public class Test1 {
 
 
     public void changePrice (){
-        mProductBrent.setPrice(new Random().nextInt(10)-5);
-        mProductFuelOil.setPrice(new Random().nextInt(10)-5);
+        mProductBrent.changePrice();
+        mProductFuelOil.changePrice();
     }
 
     public double getBrentPrice (){
@@ -127,11 +127,11 @@ public class Test1 {
     }
 
 
-    public int getAverageBrentPrice() {
+    public double getAverageBrentPrice() {
         return mProductBrent.getAvgPrice();
     }
 
-    public int getAverageFuelOilPrice() {
+    public double getAverageFuelOilPrice() {
         return mProductFuelOil.getAvgPrice();
     }
     public Product getProductBrent (){
