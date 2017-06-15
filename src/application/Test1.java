@@ -3,7 +3,7 @@ package application;
 import java.util.Random;
 
 public class Test1 {
-    private int pMoney;
+    private double pMoney;
     private int pTurn;
     private Product mProductBrent;
     private Product mProductFuelOil;
@@ -19,70 +19,170 @@ public class Test1 {
     }
 
     public void buyBrent (int quantity){
-        if (mProductBrent.getQuantity()<=0 && -mProductBrent.getQuantity()<quantity){
-            mProductBrent.setTotalValue((mProductBrent.getQuantity()+quantity)*mProductBrent.getPrice());
-        } else {
-            mProductBrent.setTotalValue (mProductBrent.getTotalValue() + quantity*mProductBrent.getPrice());
-        }
-        mProductBrent.setQuantity(quantity);
-        pMoney -=quantity*mProductBrent.getPrice();
-        if (mProductBrent.getQuantity()==0){
-            mProductBrent.setAvgPrice(0);
-        } else {
+        if ((mProductBrent.getQuantity()+quantity)< 0){
+            mProductBrent.setTotalValue((mProductBrent.getQuantity()+quantity)*mProductBrent.getAvgPrice());
+
+            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getAvgPrice()-mProductBrent.getPrice());
+
+            mProductBrent.setQuantity(quantity);
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
+
+
+        } else if ((mProductBrent.getQuantity()+quantity) == 0){
+            mProductBrent.setTotalValue(0);
+
+            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getAvgPrice()-mProductBrent.getPrice());
+
+            mProductBrent.setQuantity(quantity);
+            mProductBrent.setAvgPrice(0);
+
+
+
+        } else if ((mProductBrent.getQuantity()+quantity) > 0 && mProductBrent.getQuantity()<0){
+            mProductBrent.setTotalValue((mProductBrent.getQuantity()+quantity)*mProductBrent.getPrice());
+
+            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getAvgPrice()-mProductBrent.getPrice());
+            mProductBrent.setQuantity(quantity);
+            pMoney-= mProductBrent.getQuantity()* mProductBrent.getPrice();
+
+            mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
+
+
+        } else {
+
+            mProductBrent.setTotalValue(mProductBrent.getTotalValue() + (quantity*mProductBrent.getPrice()));
+
+            pMoney -= quantity * mProductBrent.getPrice();
+            mProductBrent.setQuantity(quantity);
+
+            mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
+
+
         }
     }
     public void sellBrent (int quantity){
-        if(quantity <= mProductBrent.getQuantity()) {
-            if (mProductBrent.getQuantity() >= 0 && mProductBrent.getQuantity() < quantity) {
-                mProductBrent.setTotalValue((mProductBrent.getQuantity() - quantity) * mProductBrent.getPrice());
-            } else {
-                mProductBrent.setTotalValue(mProductBrent.getTotalValue() - quantity * mProductBrent.getPrice());
-            }
+        if ((mProductBrent.getQuantity()-quantity)> 0){
+            mProductBrent.setTotalValue((mProductBrent.getQuantity()-quantity)*mProductBrent.getAvgPrice());
+
+            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getPrice() - mProductBrent.getAvgPrice());
+
             mProductBrent.setQuantity(-quantity);
-            pMoney += quantity * mProductBrent.getPrice();
-            if (mProductBrent.getQuantity() == 0) {
-                mProductBrent.setAvgPrice(0);
-            } else {
-                mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
-            }
+            mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / mProductBrent.getQuantity());
+
+
+        } else if ((mProductBrent.getQuantity()-quantity) == 0){
+            mProductBrent.setTotalValue(0);
+
+            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getPrice() - mProductBrent.getAvgPrice());
+
+            mProductBrent.setQuantity(-quantity);
+            mProductBrent.setAvgPrice(0);
+
+
+        } else if ((mProductBrent.getQuantity()-quantity) <0 && mProductBrent.getQuantity()>0){
+            mProductBrent.setTotalValue(-(mProductBrent.getQuantity()-quantity) * mProductBrent.getPrice());
+
+            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getPrice() - mProductBrent.getAvgPrice());
+            mProductBrent.setQuantity(-quantity);
+            pMoney -= -mProductBrent.getQuantity()*mProductBrent.getPrice();
+
+            mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / -mProductBrent.getQuantity());
+
+
+        } else {
+            mProductBrent.setTotalValue(mProductBrent.getTotalValue()+(quantity*mProductBrent.getPrice()));
+            pMoney-= quantity*mProductBrent.getPrice();
+
+            mProductBrent.setQuantity(-quantity);
+            mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / -mProductBrent.getQuantity());
+
         }
     }
 
     public void buyFuelOil (int quantity){
-        if (mProductFuelOil.getQuantity()<=0 && -mProductFuelOil.getQuantity()<quantity){
-            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()+quantity)*mProductFuelOil.getPrice());
-        } else {
-            mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue() + quantity*mProductFuelOil.getPrice());
-        }
-        mProductFuelOil.setQuantity(quantity);
-        pMoney -=quantity*mProductFuelOil.getPrice();
+        if ((mProductFuelOil.getQuantity()+quantity)< 0){
+            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()+quantity)*mProductFuelOil.getAvgPrice());
 
-        if (mProductFuelOil.getQuantity()==0){
-            mProductFuelOil.setAvgPrice(0);
-        } else {
+            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getAvgPrice()-mProductFuelOil.getPrice());
+
+            mProductFuelOil.setQuantity(quantity);
             mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
 
+
+        } else if ((mProductFuelOil.getQuantity()+quantity) == 0){
+            mProductFuelOil.setTotalValue(0);
+
+            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getAvgPrice()-mProductFuelOil.getPrice());
+
+            mProductFuelOil.setQuantity(quantity);
+            mProductFuelOil.setAvgPrice(0);
+
+
+
+        } else if ((mProductFuelOil.getQuantity()+quantity) > 0 && mProductFuelOil.getQuantity()<0){
+            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()+quantity)*mProductFuelOil.getPrice());
+
+            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getAvgPrice()-mProductFuelOil.getPrice());
+            mProductFuelOil.setQuantity(quantity);
+            pMoney-=mProductFuelOil.getQuantity()*mProductFuelOil.getPrice();
+
+            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
+
+
+        } else {
+
+            mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue() + (quantity*mProductFuelOil.getPrice()));
+
+            pMoney -= quantity * mProductFuelOil.getPrice();
+            mProductFuelOil.setQuantity(quantity);
+
+            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
+
+
         }
+
     }
 
     public void sellFuelOil (int quantity) {
-        if (quantity <= mProductFuelOil.getQuantity()) {
-            if (mProductFuelOil.getQuantity() >= 0 && mProductFuelOil.getQuantity() < quantity) {
-                mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity() - quantity) * mProductFuelOil.getPrice());
-            } else {
-                mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue() - quantity * mProductFuelOil.getPrice());
-            }
+
+        if ((mProductFuelOil.getQuantity()-quantity)> 0){
+            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()-quantity)*mProductFuelOil.getAvgPrice());
+
+            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getPrice() - mProductFuelOil.getAvgPrice());
 
             mProductFuelOil.setQuantity(-quantity);
-            pMoney += quantity * mProductFuelOil.getPrice();
+            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / mProductFuelOil.getQuantity());
 
-            if (mProductFuelOil.getQuantity() == 0) {
-                mProductFuelOil.setAvgPrice(0);
-            } else {
-                mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / mProductFuelOil.getQuantity());
-            }
+
+        } else if ((mProductFuelOil.getQuantity()-quantity) == 0){
+            mProductFuelOil.setTotalValue(0);
+
+            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getPrice() - mProductFuelOil.getAvgPrice());
+
+            mProductFuelOil.setQuantity(-quantity);
+            mProductFuelOil.setAvgPrice(0);
+
+
+        } else if ((mProductFuelOil.getQuantity()-quantity) <0 && mProductFuelOil.getQuantity()>0){
+            mProductFuelOil.setTotalValue(-(mProductFuelOil.getQuantity()-quantity) * mProductFuelOil.getPrice());
+
+            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getPrice() - mProductFuelOil.getAvgPrice());
+             mProductFuelOil.setQuantity(-quantity);
+             pMoney -= -mProductFuelOil.getQuantity()*mProductFuelOil.getPrice();
+
+             mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / -mProductFuelOil.getQuantity());
+
+
+        } else {
+             mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue()+(quantity*mProductFuelOil.getPrice()));
+             pMoney-= quantity*mProductFuelOil.getPrice();
+
+            mProductFuelOil.setQuantity(-quantity);
+            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / -mProductFuelOil.getQuantity());
+
         }
+
+
     }
 
 
@@ -111,7 +211,7 @@ public class Test1 {
         pMoney = value;
     }
 
-    public int getMoney (){
+    public double getMoney (){
         return pMoney;
     }
 
