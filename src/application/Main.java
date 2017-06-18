@@ -2,6 +2,8 @@ package application;
 
 import java.io.IOException;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 
 public class Main extends Application {
@@ -23,7 +26,13 @@ public class Main extends Application {
     private Stage stage;
     private Pane pane;
     private application.Test1 pTest1;
+    private Timeline pTimelinePriceChange;
+    private Timeline pTimelineTimerChange;
+    private int pRemainingTime;
+    private final int pTimeLimit = 16;
 
+    @FXML
+    private TextField pTextFieldTimer;
     @FXML
     private TextField pTextFieldBrentBuy;
     @FXML
@@ -103,10 +112,7 @@ public class Main extends Application {
         pTextFieldBrentPrice.setText(""+pTest1.getBrentPrice());
         pTextFieldFuelOilPrice.setText(""+pTest1.getFuelOilPrice());
         pTextFieldMoney.setText(""+ pTest1.getMoney());
-        pChartBrent.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
-        pChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
-        pChartBrentDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
-        pChartFuelOilDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
+        updateChartValues();
         pChartBrent.setName(pTest1.getProductBrent().getName());
         pChartFuelOil.setName(pTest1.getProductFuelOil().getName());
         pChartBrentDual.setName(pTest1.getProductBrent().getName());
@@ -120,7 +126,9 @@ public class Main extends Application {
         pColumnProductName.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getName()));
         pColumnProductQuantity.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getQuantity()));
         pColumnProductAvgPrice.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getAvgPrice()));
-
+        pTimelinePriceChange = new Timeline();
+        pTimelineTimerChange = new Timeline();
+        startTimer();
 
         pTextFieldBrentBuy.textProperty().addListener(new ChangeListener<String>() {
 
@@ -208,12 +216,11 @@ public class Main extends Application {
         pTextFieldFuelOilPrice.setText(""+pTest1.getFuelOilPrice());
 
         pTest1.nextTurn();
-        pChartBrent.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
-        pChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
-        pChartBrentDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
-        pChartFuelOilDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
+        updateChartValues();
 
         pTableViewProduct.refresh();
+        startTimer();
+
 
 
     }
@@ -224,13 +231,9 @@ public class Main extends Application {
         pChartFuelOil.getData().clear();
         pChartFuelOilDual.getData().clear();
         pChartBrentDual.getData().clear();
-        pChartBrent.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
-        pChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
-        pChartBrentDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
-        pChartFuelOilDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
         pTextFieldBrentPrice.setText(""+pTest1.getBrentPrice());
         pTextFieldFuelOilPrice.setText(""+pTest1.getFuelOilPrice());
-
+        updateChartValues();
         pTextFieldMoney.setText("" +pTest1.getMoney());
         pTextFieldBrentBuy.setText("0");
         pTextFieldBrentSell.setText("0");
@@ -238,7 +241,32 @@ public class Main extends Application {
         pTextFieldFuelOilSell.setText("0");
         pObsListProducts = FXCollections.observableArrayList(pTest1.getProductBrent(), pTest1.getProductFuelOil());
         pTableViewProduct.itemsProperty().setValue(pObsListProducts);
+        startTimer();
+    }
 
+    private void startTimer(){
+        pRemainingTime = pTimeLimit-1;
+        pTextFieldTimer.setText(""+pRemainingTime);
+        pTimelineTimerChange.stop();
+        pTimelinePriceChange.stop();
+        pTimelinePriceChange = new Timeline( new KeyFrame(Duration.millis(pTimeLimit*1000), ae -> buttonNextStageAction()));
+        pTimelineTimerChange = new Timeline(new KeyFrame(Duration.millis(1000), ae->changeTimer()));
+        pTimelinePriceChange.play();
+        pTimelineTimerChange.setCycleCount(pTimeLimit);
+        pTimelineTimerChange.play();
+
+    }
+    private void changeTimer(){
+        System.out.println("Current Remaining time is "+ pRemainingTime);
+        pTextFieldTimer.setText(""+pRemainingTime);
+        pRemainingTime-=1;
+    }
+
+    private void updateChartValues(){
+        pChartBrent.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
+        pChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
+        pChartBrentDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getBrentPrice()));
+        pChartFuelOilDual.getData().add(new XYChart.Data<String, Number>(""+pTest1.getTurn(), pTest1.getFuelOilPrice()));
 
     }
 

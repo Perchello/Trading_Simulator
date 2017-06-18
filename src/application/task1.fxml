@@ -218,5 +218,10 @@
             </Label>
          </children>
       </GridPane>
+      <TextField fx:id="pTextFieldTimer" layoutX="1080.0" layoutY="323.0" prefHeight="31.0" prefWidth="39.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></TextField>
+      <Label layoutX="874.0" layoutY="328.0" text="Время до следующей цены" />
     </children>
 </AnchorPane>
