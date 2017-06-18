@@ -5,9 +5,13 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,50 +25,42 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Main">
     <children>
-        <GridPane layoutX="822.0" layoutY="46.0" prefHeight="361.0" prefWidth="173.0">
+        <GridPane layoutX="792.0" layoutY="34.0" prefHeight="361.0" prefWidth="206.0">
             <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="175.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="175.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="84.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="178.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="211.0" minHeight="0.0" prefHeight="67.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="162.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="162.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="211.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="191.0" minHeight="0.0" prefHeight="187.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="pButtonBuy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBuyAction" prefHeight="31.0" prefWidth="185.0" text="Купить" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                <Button fx:id="pButtonBrentBuy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBuyBrentAction" prefHeight="31.0" prefWidth="79.0" text="Купить" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                     <GridPane.margin>
-                        <Insets top="40.0" />
+                        <Insets right="5.0" top="15.0" />
                     </GridPane.margin></Button>
-                <Button fx:id="pButtonSell" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSellAction" prefHeight="0.0" prefWidth="173.0" text="Продать" textAlignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                <Button fx:id="pButtonBrentSell" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSellBrentAction" prefHeight="31.0" prefWidth="79.0" text="Продать" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets right="5.0" top="15.0" />
+                    </GridPane.margin></Button>
+                <Label alignment="CENTER" prefHeight="0.0" prefWidth="173.0" text="Текущая цена" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets right="5.0" top="10.0" />
+                    </GridPane.margin></Label>
+                <TextField fx:id="pTextFieldBrentPrice" alignment="CENTER" editable="false" prefHeight="13.0" prefWidth="173.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                    <GridPane.margin>
+                        <Insets top="5.0" />
+                    </GridPane.margin></TextField>
+                <TextField fx:id="pTextFieldBrentBuy" alignment="CENTER" prefHeight="31.0" prefWidth="6.0" text="0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets top="15.0" />
-                    </GridPane.margin></Button>
-                <Label alignment="CENTER" prefHeight="0.0" prefWidth="173.0" text="Текущая цена" textAlignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                    <padding>
-                        <Insets top="2.0" />
-                    </padding>
-                    <GridPane.margin>
-                        <Insets top="10.0" />
-                    </GridPane.margin></Label>
-                <TextField fx:id="pTextFieldPrice" alignment="CENTER" editable="false" prefHeight="13.0" prefWidth="173.0" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                    <GridPane.margin>
-                        <Insets top="20.0" />
-                    </GridPane.margin></TextField>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="180.0" text="Выбор продукта" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                    <padding>
-                        <Insets top="2.0" />
-                    </padding>
-                </Label>
-                <ChoiceBox fx:id="pChoiceBox" prefHeight="31.0" prefWidth="179.0" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-                <TextField fx:id="pTextFieldBuy" alignment="CENTER" text="0" GridPane.rowIndex="3" GridPane.valignment="TOP">
-                    <GridPane.margin>
-                        <Insets bottom="20.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="pTextFieldSell" alignment="CENTER" text="0" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                <TextField fx:id="pTextFieldBrentSell" alignment="CENTER" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
@@ -72,11 +68,16 @@
                         <Insets top="15.0" />
                     </GridPane.margin>
                 </TextField>
-                <Button fx:id="pButtonNextStage" mnemonicParsing="false" onAction="#buttonNextStageAction" prefHeight="15.0" prefWidth="173.0" text=" Следующий ход" GridPane.rowIndex="5">
-                    <GridPane.margin>
-                        <Insets top="30.0" />
-                    </GridPane.margin>
-                </Button>
+            <Label text="Brent" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Product: " GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
             </children>
         </GridPane>
         <Pane layoutX="70.0" layoutY="638.0" prefHeight="158.0" prefWidth="692.0">
@@ -90,17 +91,6 @@
             </TableView>
          </children>
         </Pane>
-        <Pane layoutY="39.0" prefHeight="558.0" prefWidth="756.0">
-            <children>
-                <LineChart fx:id="pLineChart" animated="false" prefHeight="551.0" prefWidth="766.0" title="Нефть и нефтепродукты">
-                    <xAxis>
-                        <CategoryAxis label="Время" side="BOTTOM" startMargin="0.0" />
-                    </xAxis>
-                    <yAxis>
-                        <NumberAxis forceZeroInRange="false" label="Цена" lowerBound="80.0" side="LEFT" tickLabelGap="5.0" tickUnit="50.0" upperBound="120.0" />
-                    </yAxis>
-                </LineChart>
-            </children></Pane>
       <FlowPane alignment="CENTER" layoutX="71.0" layoutY="589.0" prefHeight="52.0" prefWidth="692.0">
          <children>
                 <Label alignment="CENTER" text="Деньги">
@@ -119,5 +109,114 @@
             <ListView layoutY="21.0" prefHeight="187.0" prefWidth="448.0" />
          </children>
       </Pane>
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="1280.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#reset" text="Reset" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane layoutY="34.0" prefHeight="556.0" prefWidth="766.0">
+         <tabs>
+            <Tab closable="false" text="Brent + Fuel Oil">
+               <content>
+                  <LineChart fx:id="pLineChartBrentFuel" animated="false" prefHeight="551.0" prefWidth="766.0" title="Brent + Fuel Oil">
+                     <xAxis>
+                        <CategoryAxis label="Время" side="BOTTOM" startMargin="0.0" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis forceZeroInRange="false" label="Цена" lowerBound="80.0" side="LEFT" tickLabelGap="5.0" tickUnit="50.0" upperBound="120.0" />
+                     </yAxis>
+                  </LineChart>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Brent">
+               <content>
+                      <LineChart fx:id="pLineChartBrent" animated="false" prefHeight="551.0" prefWidth="766.0" title="Brent">
+                          <xAxis>
+                              <CategoryAxis label="Время" side="BOTTOM" startMargin="0.0" />
+                          </xAxis>
+                          <yAxis>
+                              <NumberAxis forceZeroInRange="false" label="Цена" lowerBound="80.0" side="LEFT" tickLabelGap="5.0" tickUnit="50.0" upperBound="120.0" />
+                          </yAxis>
+                      </LineChart>
+               </content>
+            </Tab>
+            <Tab closable="false" text="Fuel Oil">
+               <content>
+                  <LineChart fx:id="pLineChartFuelOil" animated="false" prefHeight="551.0" prefWidth="766.0" title="Fuel Oil">
+                     <xAxis>
+                        <CategoryAxis label="Время" side="BOTTOM" startMargin="0.0" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis forceZeroInRange="false" label="Цена" lowerBound="80.0" side="LEFT" tickLabelGap="5.0" tickUnit="50.0" upperBound="120.0" />
+                     </yAxis>
+                  </LineChart>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+          <Button fx:id="pButtonNextStage" layoutX="947.0" layoutY="483.0" mnemonicParsing="false" onAction="#buttonNextStageAction" prefHeight="15.0" prefWidth="173.0" text=" Следующий ход" />
+      <GridPane layoutX="1051.0" layoutY="30.0" prefHeight="361.0" prefWidth="206.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="175.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="175.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="211.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="191.0" minHeight="0.0" prefHeight="187.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="pButtonFuelOilBuy" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonBuyFuelOilAction" prefHeight="31.0" prefWidth="79.0" text="Купить" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="5.0" top="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="pButtonFuelOilSell" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonSellFuelOilAction" prefHeight="31.0" prefWidth="79.0" text="Продать" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="5.0" top="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Label alignment="CENTER" prefHeight="0.0" prefWidth="173.0" text="Текущая цена" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="5.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="pTextFieldFuelOilPrice" alignment="CENTER" editable="false" prefHeight="13.0" prefWidth="173.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="pTextFieldFuelOilBuy" alignment="CENTER" prefHeight="31.0" prefWidth="6.0" text="0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="pTextFieldFuelOilSell" alignment="CENTER" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Fuel Oil" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Product: " GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
     </children>
 </AnchorPane>
