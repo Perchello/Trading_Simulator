@@ -6,9 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,10 +29,24 @@ public class ControllerMainMenu {
 
 
     @FXML
-    public void onClickStartTask1(Event event){
+    public void onClickStartTest1(Event event){
         mParrent = null;
         try {
-            mParrent = FXMLLoader.load(getClass().getResource("task1.fxml"));
+            mParrent = FXMLLoader.load(getClass().getResource("Test1.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mScene = new Scene(mParrent);
+        mStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        mStage.setScene(mScene);
+        mStage.show();
+
+    }
+    @FXML
+    public void onClickStartTest2(Event event){
+        mParrent = null;
+        try {
+            mParrent = FXMLLoader.load(getClass().getResource("Test2.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

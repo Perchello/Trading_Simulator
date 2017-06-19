@@ -2,54 +2,38 @@ package application;
 
 import java.io.IOException;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 
 public class Main extends Application {
-    private Scene scene;
-    private Stage stage;
-    private Pane pane;
+    private Scene mScene;
+    private Stage mStage;
+    private Pane mPane;
 
     @Override
     public void start(Stage stage) {
-        this.stage = stage;
+        this.mStage = stage;
         try {
-            pane = (Pane) FXMLLoader.load(Main.class.getResource("mainmenu.fxml"));
+            mPane = (Pane) FXMLLoader.load(Main.class.getResource("MainMenu.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        scene = new Scene (pane);
-        stage.setScene(scene);
+        mScene = new Scene (mPane);
+        stage.setScene(mScene);
         stage.show();
 
 
     }
 
     /*@FXML
-    public void onClickStartTask1(Event event){
+    public void onClickStartTest1(Event event){
         Parent home_page_parent = null;
         try {
-            home_page_parent = FXMLLoader.load(getClass().getResource("task1.fxml"));
+            home_page_parent = FXMLLoader.load(getClass().getResource("Test1.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,6 +10,7 @@ public class Product {
     private double mTotalValue;
     private double mAvgPrice;
     private double mCurrentPrice;
+    private double mDifference;
 
 
     public Product(String name) {
@@ -46,9 +47,10 @@ public class Product {
         return mCurrentPrice;
     }
 
-    public void changePrice() {
-        mPrice.changePrice();
+    public double changePrice() {
+        mDifference = mPrice.changePrice();
         mCurrentPrice=mPrice.getPrice();
+        return mDifference;
     }
 
     public double getTotalValue() {

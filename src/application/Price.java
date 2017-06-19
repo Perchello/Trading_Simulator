@@ -17,14 +17,6 @@ public class Price {
         mPriceChangeCount = 0;
     }
     public double getPrice(){
-        if (mPriceChangeCount==0){
-            setPriceScenario();
-            System.out.println(mName+ " scenario is " + mPriceScenario);
-            setPriceChangeCount();
-        }
-        changePrice();
-        mPriceChangeCount-=1;
-        System.out.println(mName + "has turns till scenario change " + mPriceChangeCount);
 
         return mPrice;
 
@@ -39,22 +31,40 @@ public class Price {
         return mPriceScenario;
     }
 
-    public void changePrice () {
+    public double changePrice () {
+        if (mPriceChangeCount==0){
+            setPriceScenario();
+            System.out.println(mName+ " scenario is " + mPriceScenario);
+            setPriceChangeCount();
+        }
+        System.out.println("Changing price");
+        double difference;
+
         if (mPriceScenario == 1){
-            mPrice+= (new Random().nextInt(5)-3) *0.25;
+            difference= (new Random().nextInt(5)-3) *0.25;
         } else if (mPriceScenario == 2) {
-            mPrice+= (new Random().nextInt(4)-2) *0.25;
+            difference= (new Random().nextInt(4)-2) *0.25;
 
 
         } else if (mPriceScenario == 3) {
-            mPrice+= (new Random().nextInt(5)-2) *0.25;
+            difference= (new Random().nextInt(5)-2) *0.25;
 
         } else if (mPriceScenario == 4) {
-            mPrice+= (new Random().nextInt(4)-1) *0.25;
+            difference= (new Random().nextInt(4)-1) *0.25;
 
         } else if (mPriceScenario == 5) {
-            mPrice+= (new Random().nextInt(5)-1) *0.25;
+            difference= (new Random().nextInt(5)-1) *0.25;
+        } else {
+            difference = 0;
         }
+        mPrice+=difference;
+        System.out.println ("Difference is " + difference);
+        mPriceChangeCount-=1;
+        System.out.println(mName + "has turns till scenario change " + mPriceChangeCount);
+
+        return difference;
+
+
     }
 
 

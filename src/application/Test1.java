@@ -1,22 +1,14 @@
 package application;
 
-import java.util.Random;
-
 public class Test1 {
-    private double pMoney;
-    private int pTurn;
+    private double mMoney;
+    private int mTurn;
     private Product mProductBrent;
-    private Product mProductFuelOil;
 
     public void startTest (){
         mProductBrent = new Product("Brent");
-        mProductFuelOil = new Product("Fuel Oil");
-
         setMoney(0);
         setTurn(1);
-        System.out.println ("FO price is" + mProductFuelOil.getPrice());
-
-
     }
 
 
@@ -24,7 +16,7 @@ public class Test1 {
         if ((mProductBrent.getQuantity()+quantity)< 0){
             mProductBrent.setTotalValue(-(mProductBrent.getQuantity()+quantity)*mProductBrent.getAvgPrice());
             System.out.println ("Total Value after buy " + mProductBrent.getTotalValue());
-            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getAvgPrice()-mProductBrent.getPrice());
+            mMoney += mProductBrent.getAvgPrice()*quantity;
 
             mProductBrent.setQuantity(quantity);
             mProductBrent.setAvgPrice(-mProductBrent.getTotalValue()/mProductBrent.getQuantity());
@@ -33,7 +25,7 @@ public class Test1 {
         } else if ((mProductBrent.getQuantity()+quantity) == 0){
             mProductBrent.setTotalValue(0);
 
-            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getAvgPrice()-mProductBrent.getPrice());
+            mMoney += quantity*mProductBrent.getAvgPrice();
 
             mProductBrent.setQuantity(quantity);
             mProductBrent.setAvgPrice(0);
@@ -43,9 +35,9 @@ public class Test1 {
         } else if ((mProductBrent.getQuantity()+quantity) > 0 && mProductBrent.getQuantity()<0){
             mProductBrent.setTotalValue((mProductBrent.getQuantity()+quantity)*mProductBrent.getPrice());
             System.out.println ("Total Value after buy " + mProductBrent.getTotalValue());
-            pMoney += -(mProductBrent.getAvgPrice()*mProductBrent.getQuantity() + mProductBrent.getQuantity()*(mProductBrent.getAvgPrice()-mProductBrent.getPrice()));
+            mMoney += -mProductBrent.getQuantity()*mProductBrent.getAvgPrice();
             mProductBrent.setQuantity(quantity);
-            pMoney-= mProductBrent.getQuantity()* mProductBrent.getPrice();
+            mMoney -= mProductBrent.getQuantity()* mProductBrent.getPrice();
 
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
 
@@ -55,7 +47,7 @@ public class Test1 {
             mProductBrent.setTotalValue(mProductBrent.getTotalValue() + (quantity*mProductBrent.getPrice()));
             System.out.println ("Total Value after buy " + mProductBrent.getTotalValue());
 
-            pMoney -= quantity * mProductBrent.getPrice();
+            mMoney -= quantity * mProductBrent.getPrice();
             mProductBrent.setQuantity(quantity);
 
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue()/mProductBrent.getQuantity());
@@ -68,7 +60,7 @@ public class Test1 {
             mProductBrent.setTotalValue((mProductBrent.getQuantity()-quantity)*mProductBrent.getAvgPrice());
             System.out.println ("Total Value after sell " + mProductBrent.getTotalValue());
 
-            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getPrice() - mProductBrent.getAvgPrice());
+            mMoney += quantity*mProductBrent.getAvgPrice();
 
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / mProductBrent.getQuantity());
@@ -77,7 +69,7 @@ public class Test1 {
         } else if ((mProductBrent.getQuantity()-quantity) == 0){
             mProductBrent.setTotalValue(0);
 
-            pMoney += mProductBrent.getAvgPrice()*quantity + quantity*(mProductBrent.getPrice() - mProductBrent.getAvgPrice());
+            mMoney += quantity*mProductBrent.getAvgPrice();
 
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(0);
@@ -87,9 +79,9 @@ public class Test1 {
             mProductBrent.setTotalValue(-(mProductBrent.getQuantity()-quantity) * mProductBrent.getPrice());
             System.out.println ("Total Value after sell " + mProductBrent.getTotalValue());
 
-            pMoney += mProductBrent.getAvgPrice()*mProductBrent.getQuantity() + mProductBrent.getQuantity()*(mProductBrent.getPrice() - mProductBrent.getAvgPrice());
+            mMoney += mProductBrent.getQuantity()*mProductBrent.getAvgPrice();
             mProductBrent.setQuantity(-quantity);
-            pMoney -= -mProductBrent.getQuantity()*mProductBrent.getPrice();
+            mMoney -= -mProductBrent.getQuantity()*mProductBrent.getPrice();
 
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / -mProductBrent.getQuantity());
 
@@ -98,7 +90,7 @@ public class Test1 {
             mProductBrent.setTotalValue(mProductBrent.getTotalValue()+(quantity*mProductBrent.getPrice()));
             System.out.println ("Total Value after sell " + mProductBrent.getTotalValue());
 
-            pMoney-= quantity*mProductBrent.getPrice();
+            mMoney -= quantity*mProductBrent.getPrice();
 
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / -mProductBrent.getQuantity());
@@ -106,131 +98,45 @@ public class Test1 {
         }
     }
 
-    public void buyFuelOil (int quantity){
-        if ((mProductFuelOil.getQuantity()+quantity)< 0){
-            mProductFuelOil.setTotalValue(-(mProductFuelOil.getQuantity()+quantity)*mProductFuelOil.getAvgPrice());
-
-            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getAvgPrice()-mProductFuelOil.getPrice());
-
-            mProductFuelOil.setQuantity(quantity);
-            mProductFuelOil.setAvgPrice(-mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
-
-
-        } else if ((mProductFuelOil.getQuantity()+quantity) == 0){
-            mProductFuelOil.setTotalValue(0);
-
-            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getAvgPrice()-mProductFuelOil.getPrice());
-
-            mProductFuelOil.setQuantity(quantity);
-            mProductFuelOil.setAvgPrice(0);
-
-
-
-        } else if ((mProductFuelOil.getQuantity()+quantity) > 0 && mProductFuelOil.getQuantity()<0){
-            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()+quantity)*mProductFuelOil.getPrice());
-
-            pMoney += -(mProductFuelOil.getAvgPrice()*mProductFuelOil.getQuantity() + mProductFuelOil.getQuantity()*(mProductFuelOil.getAvgPrice()-mProductFuelOil.getPrice()));
-            mProductFuelOil.setQuantity(quantity);
-            pMoney-=mProductFuelOil.getQuantity()*mProductFuelOil.getPrice();
-
-            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
-
-
-        } else {
-
-            mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue() + (quantity*mProductFuelOil.getPrice()));
-
-            pMoney -= quantity * mProductFuelOil.getPrice();
-            mProductFuelOil.setQuantity(quantity);
-
-            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
-
+    public void setBalance(double difference) {
+        if (mProductBrent.getQuantity() > 0 ){
+            mMoney += difference*mProductBrent.getQuantity();
+            System.out.println ("Price went up by " + difference);
+        } else if (mProductBrent.getQuantity()<0){
+            mMoney -= difference*mProductBrent.getQuantity();
+            System.out.println ("Price went down by " + difference);
 
         }
 
     }
-
-    public void sellFuelOil (int quantity) {
-
-        if ((mProductFuelOil.getQuantity()-quantity)> 0){
-            mProductFuelOil.setTotalValue((mProductFuelOil.getQuantity()-quantity)*mProductFuelOil.getAvgPrice());
-
-            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getPrice() - mProductFuelOil.getAvgPrice());
-
-            mProductFuelOil.setQuantity(-quantity);
-            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / mProductFuelOil.getQuantity());
-
-
-        } else if ((mProductFuelOil.getQuantity()-quantity) == 0){
-            mProductFuelOil.setTotalValue(0);
-
-            pMoney += mProductFuelOil.getAvgPrice()*quantity + quantity*(mProductFuelOil.getPrice() - mProductFuelOil.getAvgPrice());
-
-            mProductFuelOil.setQuantity(-quantity);
-            mProductFuelOil.setAvgPrice(0);
-
-
-        } else if ((mProductFuelOil.getQuantity()-quantity) <0 && mProductFuelOil.getQuantity()>0){
-            mProductFuelOil.setTotalValue(-(mProductFuelOil.getQuantity()-quantity) * mProductFuelOil.getPrice());
-
-            pMoney += mProductFuelOil.getAvgPrice()*mProductFuelOil.getQuantity() + mProductFuelOil.getQuantity()*(mProductFuelOil.getPrice() - mProductFuelOil.getAvgPrice());
-             mProductFuelOil.setQuantity(-quantity);
-             pMoney -= -mProductFuelOil.getQuantity()*mProductFuelOil.getPrice();
-
-             mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / -mProductFuelOil.getQuantity());
-
-
-        } else {
-             mProductFuelOil.setTotalValue(mProductFuelOil.getTotalValue()+(quantity*mProductFuelOil.getPrice()));
-             pMoney-= quantity*mProductFuelOil.getPrice();
-
-            mProductFuelOil.setQuantity(-quantity);
-            mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / -mProductFuelOil.getQuantity());
-
-        }
-
-
-    }
-
-
     public void changePrice (){
-        mProductBrent.changePrice();
-        mProductFuelOil.changePrice();
+
+        double i = mProductBrent.changePrice();
+        System.out.println("i = " + i);
+                setBalance(i);
     }
 
     public double getBrentPrice (){
         return mProductBrent.getPrice();
     }
 
-    public double getFuelOilPrice (){
-        return mProductFuelOil.getPrice();
-    }
-
-    public int getBrentQuantity (){
-        return mProductBrent.getQuantity();
-    }
-
-    public int getFuelOilQuantity (){
-        return mProductFuelOil.getQuantity();
-    }
-
     public void setMoney (int value) {
-        pMoney = value;
+        mMoney = value;
     }
 
     public double getMoney (){
-        return pMoney;
+        return mMoney;
     }
 
     public int getTurn() {
-        return pTurn;
+        return mTurn;
     }
 
     public void setTurn(int pTurn) {
-        this.pTurn = pTurn;
+        this.mTurn = pTurn;
     }
     public void nextTurn (){
-        pTurn+=1;
+        mTurn +=1;
     }
 
 
@@ -238,15 +144,10 @@ public class Test1 {
         return mProductBrent.getAvgPrice();
     }
 
-    public double getAverageFuelOilPrice() {
-        return mProductFuelOil.getAvgPrice();
-    }
     public Product getProductBrent (){
         return mProductBrent;
     }
 
-    public Product getProductFuelOil(){
-        return mProductFuelOil;
-    }
+
 
 }

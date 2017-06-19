@@ -22,12 +22,15 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class ControllerTask1 {
-    private application.Test1 mTest1;
+/**
+ * Created by Perchello on 18/06/2017.
+ */
+public class ControllerTask2 {
+    private Test2 mTest2;
     private Timeline mTimelinePriceChange;
     private Timeline mTimelineTimerChange;
     private int mRemainingTime;
-    private final int mTimeLimit = 30;
+    private final int mTimeLimit = 16;
     private Stage mStage;
     private Scene mScene;
     private Parent mParrent;
@@ -39,18 +42,29 @@ public class ControllerTask1 {
     @FXML
     private TextField mTextFieldBrentSell;
     @FXML
+    private TextField mTextFieldFuelOilBuy;
+    @FXML
+    private TextField mTextFieldFuelOilSell;
+    @FXML
     private TextField mTextFieldMoney;
     @FXML
     private TextField mTextFieldBrentPrice;
     @FXML
+    private TextField mTextFieldFuelOilPrice;
+    @FXML
     private LineChart<String, Number> mLineChartBrent;
-
+    @FXML
+    private LineChart <String, Number> mLineChartFuelOil;
+    @FXML
+    private LineChart <String, Number> mLineChartBrentFuel;
     @FXML
     private XYChart.Series<String, Number> mChartBrent;
-
+    @FXML
+    private XYChart.Series<String, Number> mChartFuelOil;
     @FXML
     private XYChart.Series<String, Number> mChartBrentDual;
-
+    @FXML
+    private XYChart.Series<String, Number> mChartFuelOilDual;
     @FXML
     private TableView<Product> mTableViewProduct;
     @FXML
@@ -70,24 +84,27 @@ public class ControllerTask1 {
 
     private void startTest1() {
         mChartBrent = new XYChart.Series<>();
-
+        mChartFuelOil = new XYChart.Series<>();
+        mChartFuelOilDual = new XYChart.Series<>();
         mChartBrentDual = new XYChart.Series<>();
 
-        mTest1 = new Test1();
-        mTest1.startTest();
+        mTest2 = new Test2();
+        mTest2.startTest();
 
-        mObsListProducts = FXCollections.observableArrayList(mTest1.getProductBrent());
-        mTextFieldBrentPrice.setText(""+ mTest1.getBrentPrice());
-
-        mTextFieldMoney.setText(""+ mTest1.getMoney());
+        mObsListProducts = FXCollections.observableArrayList(mTest2.getProductBrent(), mTest2.getProductFuelOil());
+        mTextFieldBrentPrice.setText(""+ mTest2.getBrentPrice());
+        mTextFieldFuelOilPrice.setText(""+ mTest2.getFuelOilPrice());
+        mTextFieldMoney.setText(""+ mTest2.getMoney());
         updateChartValues();
-        mChartBrent.setName(mTest1.getProductBrent().getName());
-
-        mChartBrentDual.setName(mTest1.getProductBrent().getName());
-
+        mChartBrent.setName(mTest2.getProductBrent().getName());
+        mChartFuelOil.setName(mTest2.getProductFuelOil().getName());
+        mChartBrentDual.setName(mTest2.getProductBrent().getName());
+        mChartFuelOilDual.setName(mTest2.getProductFuelOil().getName());
 
         mLineChartBrent.getData().add(mChartBrent);
-
+        mLineChartFuelOil.getData().add(mChartFuelOil);
+        mLineChartBrentFuel.getData().add(mChartBrentDual);
+        mLineChartBrentFuel.getData().add(mChartFuelOilDual);
         mTableViewProduct.itemsProperty().setValue(mObsListProducts);
         mColumnProductName.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getName()));
         mColumnProductQuantity.setCellValueFactory(param -> new SimpleObjectProperty(param.getValue().getQuantity()));
@@ -122,29 +139,46 @@ public class ControllerTask1 {
 
     @FXML
     public void buttonBuyBrentAction (){
-        mTest1.buyBrent(Integer.parseInt(mTextFieldBrentBuy.getText()));
+        mTest2.buyBrent(Integer.parseInt(mTextFieldBrentBuy.getText()));
 
-        mTextFieldMoney.setText(""+ mTest1.getMoney());
+        mTextFieldMoney.setText(""+ mTest2.getMoney());
         mTableViewProduct.refresh();
     }
 
     @FXML
     public void buttonSellBrentAction (){
-        mTest1.sellBrent(Integer.parseInt(mTextFieldBrentSell.getText()));
+        mTest2.sellBrent(Integer.parseInt(mTextFieldBrentSell.getText()));
 
-        mTextFieldMoney.setText(""+ mTest1.getMoney());
+        mTextFieldMoney.setText(""+ mTest2.getMoney());
         mTableViewProduct.refresh();
 
     }
 
+    @FXML
+    public void buttonBuyFuelOilAction (){
+        mTest2.buyFuelOil(Integer.parseInt(mTextFieldFuelOilBuy.getText()));
+
+        mTextFieldMoney.setText(""+ mTest2.getMoney());
+        mTableViewProduct.refresh();
+    }
+
+    @FXML
+    public void buttonSellFuelOilAction (){
+        mTest2.sellFuelOil(Integer.parseInt(mTextFieldFuelOilSell.getText()));
+
+        mTextFieldMoney.setText(""+ mTest2.getMoney());
+        mTableViewProduct.refresh();
+
+    }
 
     @FXML
     public void buttonNextStageAction(){
-        mTest1.changePrice();
-        mTextFieldBrentPrice.setText(""+ mTest1.getBrentPrice());
-        mTest1.nextTurn();
+        mTest2.changePrice();
+        mTextFieldBrentPrice.setText(""+ mTest2.getBrentPrice());
+        mTextFieldFuelOilPrice.setText(""+ mTest2.getFuelOilPrice());
+
+        mTest2.nextTurn();
         updateChartValues();
-        mTextFieldMoney.setText(""+mTest1.getMoney());
 
         mTableViewProduct.refresh();
         startTimer();
@@ -154,19 +188,21 @@ public class ControllerTask1 {
     }
     @FXML
     private void reset() {
-        mTest1.startTest();
+        mTest2.startTest();
         mChartBrent.getData().clear();
-
+        mChartFuelOil.getData().clear();
+        mChartFuelOilDual.getData().clear();
         mChartBrentDual.getData().clear();
-        mTextFieldBrentPrice.setText(""+ mTest1.getBrentPrice());
+        mTextFieldBrentPrice.setText(""+ mTest2.getBrentPrice());
+        mTextFieldFuelOilPrice.setText(""+ mTest2.getFuelOilPrice());
         updateChartValues();
-        mTextFieldMoney.setText("" + mTest1.getMoney());
+        mTextFieldMoney.setText("" + mTest2.getMoney());
         mTextFieldBrentBuy.setText("0");
         mTextFieldBrentSell.setText("0");
-        mObsListProducts = FXCollections.observableArrayList(mTest1.getProductBrent());
+        mTextFieldFuelOilBuy.setText("0");
+        mTextFieldFuelOilSell.setText("0");
+        mObsListProducts = FXCollections.observableArrayList(mTest2.getProductBrent(), mTest2.getProductFuelOil());
         mTableViewProduct.itemsProperty().setValue(mObsListProducts);
-
-
         startTimer();
     }
 
@@ -189,8 +225,10 @@ public class ControllerTask1 {
     }
 
     private void updateChartValues(){
-        mChartBrent.getData().add(new XYChart.Data<String, Number>(""+ mTest1.getTurn(), mTest1.getBrentPrice()));
-        mChartBrentDual.getData().add(new XYChart.Data<String, Number>(""+ mTest1.getTurn(), mTest1.getBrentPrice()));
+        mChartBrent.getData().add(new XYChart.Data<String, Number>(""+ mTest2.getTurn(), mTest2.getBrentPrice()));
+        mChartFuelOil.getData().add(new XYChart.Data<String, Number>(""+ mTest2.getTurn(), mTest2.getFuelOilPrice()));
+        mChartBrentDual.getData().add(new XYChart.Data<String, Number>(""+ mTest2.getTurn(), mTest2.getBrentPrice()));
+        mChartFuelOilDual.getData().add(new XYChart.Data<String, Number>(""+ mTest2.getTurn(), mTest2.getFuelOilPrice()));
 
     }
 
