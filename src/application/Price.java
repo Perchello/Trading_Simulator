@@ -58,7 +58,7 @@ public class Price {
             difference = 0;
         }
         mPrice+=difference;
-        System.out.println ("Difference is " + difference);
+        System.out.println (mName + " difference is " + difference);
         mPriceChangeCount-=1;
         System.out.println(mName + "has turns till scenario change " + mPriceChangeCount);
 

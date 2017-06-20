@@ -17,6 +17,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -34,6 +35,7 @@ public class ControllerTask2 {
     private Stage mStage;
     private Scene mScene;
     private Parent mParrent;
+    private ControllerNoMoneyDialog mControllerNoMoneyDialog;
 
     @FXML
     private TextField mTextFieldTimer;
@@ -87,7 +89,7 @@ public class ControllerTask2 {
         mChartFuelOil = new XYChart.Series<>();
         mChartFuelOilDual = new XYChart.Series<>();
         mChartBrentDual = new XYChart.Series<>();
-
+        mControllerNoMoneyDialog = new ControllerNoMoneyDialog();
         mTest2 = new Test2();
         mTest2.startTest();
 
@@ -140,34 +142,51 @@ public class ControllerTask2 {
     @FXML
     public void buttonBuyBrentAction (){
         mTest2.buyBrent(Integer.parseInt(mTextFieldBrentBuy.getText()));
-
-        mTextFieldMoney.setText(""+ mTest2.getMoney());
-        mTableViewProduct.refresh();
+        if (mTest2.getEnoughMoney()) {
+            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTableViewProduct.refresh();
+        } else {
+            createDialog();
+            mTest2.setEnoughMoney(true);
+        }
     }
 
     @FXML
     public void buttonSellBrentAction (){
         mTest2.sellBrent(Integer.parseInt(mTextFieldBrentSell.getText()));
-
-        mTextFieldMoney.setText(""+ mTest2.getMoney());
-        mTableViewProduct.refresh();
+        if (mTest2.getEnoughMoney()) {
+            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTableViewProduct.refresh();
+        } else {
+            createDialog();
+            mTest2.setEnoughMoney(true);
+        }
 
     }
 
     @FXML
     public void buttonBuyFuelOilAction (){
         mTest2.buyFuelOil(Integer.parseInt(mTextFieldFuelOilBuy.getText()));
-
-        mTextFieldMoney.setText(""+ mTest2.getMoney());
-        mTableViewProduct.refresh();
+        if (mTest2.getEnoughMoney()) {
+            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTableViewProduct.refresh();
+        } else {
+            createDialog();
+            mTest2.setEnoughMoney(true);
+        }
     }
 
     @FXML
     public void buttonSellFuelOilAction (){
         mTest2.sellFuelOil(Integer.parseInt(mTextFieldFuelOilSell.getText()));
+        if (mTest2.getEnoughMoney()) {
 
-        mTextFieldMoney.setText(""+ mTest2.getMoney());
-        mTableViewProduct.refresh();
+            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTableViewProduct.refresh();
+        } else {
+            createDialog();
+            mTest2.setEnoughMoney(true);
+        }
 
     }
 
@@ -179,6 +198,7 @@ public class ControllerTask2 {
 
         mTest2.nextTurn();
         updateChartValues();
+        mTextFieldMoney.setText(""+mTest2.getMoney());
 
         mTableViewProduct.refresh();
         startTimer();
@@ -245,6 +265,22 @@ public class ControllerTask2 {
         mStage = (Stage) mTextFieldBrentBuy.getScene().getWindow();
         mStage.setScene(mScene);
         mStage.show();
+    }
+
+    public void createDialog () {
+        final Stage myDialog = new Stage();
+        Scene myDialogScene = null;
+        try {
+            myDialogScene = new Scene (FXMLLoader.load(getClass().getResource("NoMoneyDialog.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        myDialog.setScene(myDialogScene);
+        myDialog.initModality(Modality.APPLICATION_MODAL);
+        myDialog.setTitle("Недостаточно денег");
+        myDialog.show();
+
     }
 
 }

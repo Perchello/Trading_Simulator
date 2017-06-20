@@ -14,9 +14,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -32,6 +34,8 @@ public class ControllerTask1 {
     private Scene mScene;
     private Parent mParrent;
 
+    @FXML
+    private Button mDialogButton;
     @FXML
     private TextField mTextFieldTimer;
     @FXML
@@ -165,8 +169,6 @@ public class ControllerTask1 {
         mTextFieldBrentSell.setText("0");
         mObsListProducts = FXCollections.observableArrayList(mTest1.getProductBrent());
         mTableViewProduct.itemsProperty().setValue(mObsListProducts);
-
-
         startTimer();
     }
 
@@ -208,5 +210,7 @@ public class ControllerTask1 {
         mStage.setScene(mScene);
         mStage.show();
     }
+
+
 
 }

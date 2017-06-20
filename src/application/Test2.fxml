@@ -15,6 +15,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -67,6 +68,9 @@
                     <GridPane.margin>
                         <Insets top="15.0" />
                     </GridPane.margin>
+               <tooltip>
+                  <Tooltip text="xxxx" />
+               </tooltip>
                 </TextField>
             <Label text="Brent" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <font>

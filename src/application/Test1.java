@@ -25,7 +25,7 @@ public class Test1 {
         } else if ((mProductBrent.getQuantity()+quantity) == 0){
             mProductBrent.setTotalValue(0);
 
-            mMoney += quantity*mProductBrent.getAvgPrice();
+            mMoney += mProductBrent.getAvgPrice()*quantity;
 
             mProductBrent.setQuantity(quantity);
             mProductBrent.setAvgPrice(0);
@@ -60,7 +60,7 @@ public class Test1 {
             mProductBrent.setTotalValue((mProductBrent.getQuantity()-quantity)*mProductBrent.getAvgPrice());
             System.out.println ("Total Value after sell " + mProductBrent.getTotalValue());
 
-            mMoney += quantity*mProductBrent.getAvgPrice();
+            mMoney += mProductBrent.getAvgPrice()*quantity;
 
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / mProductBrent.getQuantity());
@@ -69,7 +69,7 @@ public class Test1 {
         } else if ((mProductBrent.getQuantity()-quantity) == 0){
             mProductBrent.setTotalValue(0);
 
-            mMoney += quantity*mProductBrent.getAvgPrice();
+            mMoney += mProductBrent.getAvgPrice()*quantity;
 
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(0);
@@ -101,19 +101,18 @@ public class Test1 {
     public void setBalance(double difference) {
         if (mProductBrent.getQuantity() > 0 ){
             mMoney += difference*mProductBrent.getQuantity();
-            System.out.println ("Price went up by " + difference);
+            System.out.println ("Brent price changed by " + difference);
         } else if (mProductBrent.getQuantity()<0){
-            mMoney -= difference*mProductBrent.getQuantity();
-            System.out.println ("Price went down by " + difference);
+            mMoney += difference*mProductBrent.getQuantity();
+            System.out.println ("Brent price changed by " + difference);
 
         }
 
     }
     public void changePrice (){
 
-        double i = mProductBrent.changePrice();
-        System.out.println("i = " + i);
-                setBalance(i);
+        setBalance(mProductBrent.changePrice());
+
     }
 
     public double getBrentPrice (){
