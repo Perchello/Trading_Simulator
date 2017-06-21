@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 /**
  * Created by Perchello on 18/06/2017.
@@ -78,6 +79,7 @@ public class ControllerTask2 {
 
 
     ObservableList <Product> mObsListProducts;
+    ObservableList <Product> mLogObsList;
 
     public void initialize () {
         startTest1();
@@ -94,9 +96,10 @@ public class ControllerTask2 {
         mTest2.startTest();
 
         mObsListProducts = FXCollections.observableArrayList(mTest2.getProductBrent(), mTest2.getProductFuelOil());
+
         mTextFieldBrentPrice.setText(""+ mTest2.getBrentPrice());
         mTextFieldFuelOilPrice.setText(""+ mTest2.getFuelOilPrice());
-        mTextFieldMoney.setText(""+ mTest2.getMoney());
+        mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
         updateChartValues();
         mChartBrent.setName(mTest2.getProductBrent().getName());
         mChartFuelOil.setName(mTest2.getProductFuelOil().getName());
@@ -143,10 +146,10 @@ public class ControllerTask2 {
     public void buttonBuyBrentAction (){
         mTest2.buyBrent(Integer.parseInt(mTextFieldBrentBuy.getText()));
         if (mTest2.getEnoughMoney()) {
-            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
             mTableViewProduct.refresh();
         } else {
-            createDialog();
+            createNoMoneyDialog();
             mTest2.setEnoughMoney(true);
         }
     }
@@ -155,10 +158,10 @@ public class ControllerTask2 {
     public void buttonSellBrentAction (){
         mTest2.sellBrent(Integer.parseInt(mTextFieldBrentSell.getText()));
         if (mTest2.getEnoughMoney()) {
-            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
             mTableViewProduct.refresh();
         } else {
-            createDialog();
+            createNoMoneyDialog();
             mTest2.setEnoughMoney(true);
         }
 
@@ -168,10 +171,10 @@ public class ControllerTask2 {
     public void buttonBuyFuelOilAction (){
         mTest2.buyFuelOil(Integer.parseInt(mTextFieldFuelOilBuy.getText()));
         if (mTest2.getEnoughMoney()) {
-            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
             mTableViewProduct.refresh();
         } else {
-            createDialog();
+            createNoMoneyDialog();
             mTest2.setEnoughMoney(true);
         }
     }
@@ -181,10 +184,10 @@ public class ControllerTask2 {
         mTest2.sellFuelOil(Integer.parseInt(mTextFieldFuelOilSell.getText()));
         if (mTest2.getEnoughMoney()) {
 
-            mTextFieldMoney.setText("" + mTest2.getMoney());
+            mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
             mTableViewProduct.refresh();
         } else {
-            createDialog();
+            createNoMoneyDialog();
             mTest2.setEnoughMoney(true);
         }
 
@@ -198,7 +201,7 @@ public class ControllerTask2 {
 
         mTest2.nextTurn();
         updateChartValues();
-        mTextFieldMoney.setText(""+mTest2.getMoney());
+        mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
 
         mTableViewProduct.refresh();
         startTimer();
@@ -216,7 +219,7 @@ public class ControllerTask2 {
         mTextFieldBrentPrice.setText(""+ mTest2.getBrentPrice());
         mTextFieldFuelOilPrice.setText(""+ mTest2.getFuelOilPrice());
         updateChartValues();
-        mTextFieldMoney.setText("" + mTest2.getMoney());
+        mTextFieldMoney.setText(formatDouble(mTest2.getMoney()));
         mTextFieldBrentBuy.setText("0");
         mTextFieldBrentSell.setText("0");
         mTextFieldFuelOilBuy.setText("0");
@@ -239,7 +242,6 @@ public class ControllerTask2 {
 
     }
     private void changeTimer(){
-        System.out.println("Current Remaining time is "+ mRemainingTime);
         mTextFieldTimer.setText(""+ mRemainingTime);
         mRemainingTime -=1;
     }
@@ -267,20 +269,50 @@ public class ControllerTask2 {
         mStage.show();
     }
 
-    public void createDialog () {
-        final Stage myDialog = new Stage();
-        Scene myDialogScene = null;
+    public void createNoMoneyDialog() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NoMoneyDialog.fxml"));
+        Stage stage = new Stage();
+        Parent root = null;
         try {
-            myDialogScene = new Scene (FXMLLoader.load(getClass().getResource("NoMoneyDialog.fxml")));
+            root = (Parent)fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        myDialog.setScene(myDialogScene);
-        myDialog.initModality(Modality.APPLICATION_MODAL);
-        myDialog.setTitle("Недостаточно денег");
-        myDialog.show();
+        ControllerNoMoneyDialog controller = fxmlLoader.<ControllerNoMoneyDialog>getController();
+        controller.setDialogText(mTest2.getRequiredMoney(), mTest2.getMoney());
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Недостаточно средств");
+        stage.show();
 
+    }
+
+    public void createTradeLogDialog() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TradeLogDialog.fxml"));
+        Stage stage = new Stage();
+        Parent root = null;
+        mLogObsList = FXCollections.observableArrayList(mTest2.getProductArrayList());
+        try {
+            root = (Parent)fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ControllerTradLogDialog controller = fxmlLoader.<ControllerTradLogDialog>getController();
+        controller.setObsListProducts(mLogObsList);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Список транзакций");
+        stage.show();
+
+    }
+
+    public String formatDouble(double value){
+        String pattern = "###,###.00";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        String formattedDouble = decimalFormat.format(value);
+
+        return formattedDouble;
     }
 
 }

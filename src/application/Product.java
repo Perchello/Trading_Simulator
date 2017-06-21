@@ -1,5 +1,6 @@
 package application;
 
+
 /**
  * Created by Perchello on 12/06/2017.
  */
@@ -11,6 +12,7 @@ public class Product {
     private double mAvgPrice;
     private double mCurrentPrice;
     private double mDifference;
+    private int mCurrentTurn;
 
 
     public Product(String name) {
@@ -18,13 +20,23 @@ public class Product {
         mQuantity = 0;
         mTotalValue = 0;
         mAvgPrice = 0;
-        if (name == "Brent"){
-            mCurrentPrice =100;
-            mPrice = new Price (mCurrentPrice, mName);
-        } else if  (name == "Fuel Oil"){
-            mCurrentPrice =200;
-            mPrice = new Price (mCurrentPrice, mName);
+        if (name == "Brent") {
+            mCurrentPrice = 100;
+            mPrice = new Price(mCurrentPrice, mName);
+        } else if (name == "Fuel Oil") {
+            mCurrentPrice = 200;
+            mPrice = new Price(mCurrentPrice, mName);
         }
+    }
+    public Product (int turn, String name, int quantity, double price, double total){
+        mCurrentTurn = turn;
+        mName = name;
+        mQuantity = quantity;
+        mPrice = new Price (price, mName);
+        mCurrentPrice = mPrice.getPrice();
+        mTotalValue = total;
+
+
     }
 
     public String getName() {
@@ -68,4 +80,12 @@ public class Product {
     public void setAvgPrice(double mAvgPrice) {
         this.mAvgPrice = mAvgPrice;
     }
+    public int getCurrentTurn(){
+        return mCurrentTurn;
+
+    }
+    public double getCurrentPrice(){
+        return mCurrentPrice;
+    }
+
 }

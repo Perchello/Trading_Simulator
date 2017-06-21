@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Test2 {
     private double mMoney;
     private int mTurn;
@@ -7,12 +9,19 @@ public class Test2 {
     private Product mProductFuelOil;
     private boolean mEnoughMoney;
     private double mRequiredMoney;
+    private ArrayList<Product> mProductArrayList;
 
 
     public void startTest (){
         mProductBrent = new Product("Brent");
         mProductFuelOil = new Product("Fuel Oil");
+        mProductArrayList = new ArrayList<Product>();
         mEnoughMoney = true;
+        mProductArrayList.add(new Product(1, "Brent", 2, 120, 240));
+        /*mProductArrayList.add(new Product(2, "Brent", 1, 110, 110));
+        mProductArrayList.add(new Product(3, "Fuel Oil", 3, 200, 600));
+        mProductArrayList.add(new Product(4, "Brent", 2, 120, 240));
+        mProductArrayList.add(new Product(5, "Fuel Oil", 3, 120, 360));*/
 
         setMoney(20000);
         setTurn(1);
@@ -28,6 +37,7 @@ public class Test2 {
             mProductBrent.setQuantity(quantity);
             mProductBrent.setAvgPrice(-mProductBrent.getTotalValue()/mProductBrent.getQuantity());
 
+            addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
 
         } else if ((mProductBrent.getQuantity()+quantity) == 0){
             mProductBrent.setTotalValue(0);
@@ -37,6 +47,7 @@ public class Test2 {
             mProductBrent.setQuantity(quantity);
             mProductBrent.setAvgPrice(0);
 
+            addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
 
 
         } else if ((mProductBrent.getQuantity()+quantity) > 0 && mProductBrent.getQuantity()<0){
@@ -48,6 +59,9 @@ public class Test2 {
                 mMoney -= mProductBrent.getQuantity() * mProductBrent.getPrice();
 
                 mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / mProductBrent.getQuantity());
+
+                addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
+
             } else {
                 mEnoughMoney=false;
             }
@@ -61,6 +75,9 @@ public class Test2 {
                 mProductBrent.setQuantity(quantity);
 
                 mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / mProductBrent.getQuantity());
+
+                addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
+
             } else {
                 mEnoughMoney=false;
 
@@ -77,6 +94,7 @@ public class Test2 {
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / mProductBrent.getQuantity());
 
+            addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
 
         } else if ((mProductBrent.getQuantity()-quantity) == 0){
             mProductBrent.setTotalValue(0);
@@ -86,6 +104,7 @@ public class Test2 {
             mProductBrent.setQuantity(-quantity);
             mProductBrent.setAvgPrice(0);
 
+            addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
 
         } else if ((mProductBrent.getQuantity()-quantity) <0 && mProductBrent.getQuantity()>0){
             mRequiredMoney = mProductBrent.getQuantity()*mProductBrent.getAvgPrice()-(-quantity*mProductBrent.getPrice());
@@ -97,6 +116,9 @@ public class Test2 {
                 mMoney -= -mProductBrent.getQuantity() * mProductBrent.getPrice();
 
                 mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / -mProductBrent.getQuantity());
+
+                addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
+
             } else {
                 mEnoughMoney = false;
             }
@@ -111,6 +133,9 @@ public class Test2 {
 
                 mProductBrent.setQuantity(-quantity);
                 mProductBrent.setAvgPrice(mProductBrent.getTotalValue() / -mProductBrent.getQuantity());
+
+                addToArrayListProducts(mTurn, mProductBrent.getName(), quantity, mProductBrent.getPrice(), mProductBrent.getPrice()*quantity);
+
             } else {
                 mEnoughMoney = false;
             }
@@ -127,6 +152,7 @@ public class Test2 {
             mProductFuelOil.setQuantity(quantity);
             mProductFuelOil.setAvgPrice(-mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
 
+            addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
 
         } else if ((mProductFuelOil.getQuantity()+quantity) == 0){
             mProductFuelOil.setTotalValue(0);
@@ -136,6 +162,7 @@ public class Test2 {
             mProductFuelOil.setQuantity(quantity);
             mProductFuelOil.setAvgPrice(0);
 
+            addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
 
 
         } else if ((mProductFuelOil.getQuantity()+quantity) > 0 && mProductFuelOil.getQuantity()<0){
@@ -148,6 +175,9 @@ public class Test2 {
                 mMoney -= mProductFuelOil.getQuantity() * mProductFuelOil.getPrice();
 
                 mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / mProductFuelOil.getQuantity());
+
+                addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
+
             } else {
                 mEnoughMoney = false;
             }
@@ -161,6 +191,9 @@ public class Test2 {
                 mProductFuelOil.setQuantity(quantity);
 
                 mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / mProductFuelOil.getQuantity());
+
+                addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
+
             } else {
                 mEnoughMoney = false;
             }
@@ -179,7 +212,7 @@ public class Test2 {
             mProductFuelOil.setQuantity(-quantity);
             mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue()/mProductFuelOil.getQuantity());
 
-
+            addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
         } else if ((mProductFuelOil.getQuantity()-quantity) == 0){
             mProductFuelOil.setTotalValue(0);
 
@@ -188,6 +221,7 @@ public class Test2 {
             mProductFuelOil.setQuantity(-quantity);
             mProductFuelOil.setAvgPrice(0);
 
+            addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
 
         } else if ((mProductFuelOil.getQuantity()-quantity) <0 && mProductFuelOil.getQuantity()>0){
             mRequiredMoney = mProductFuelOil.getAvgPrice()*mProductFuelOil.getQuantity()-(-quantity*mProductFuelOil.getPrice());
@@ -197,6 +231,8 @@ public class Test2 {
                 mProductFuelOil.setQuantity(-quantity);
                 mMoney -= -mProductFuelOil.getQuantity() * mProductFuelOil.getPrice();
                 mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / -mProductFuelOil.getQuantity());
+                addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
+
             } else {
                 mEnoughMoney = false;
             }
@@ -209,6 +245,8 @@ public class Test2 {
 
                 mProductFuelOil.setQuantity(-quantity);
                 mProductFuelOil.setAvgPrice(mProductFuelOil.getTotalValue() / -mProductFuelOil.getQuantity());
+                addToArrayListProducts(mTurn, mProductFuelOil.getName(), quantity, mProductFuelOil.getPrice(), mProductFuelOil.getPrice()*quantity);
+
             } else {
                 mEnoughMoney = false;
             }
@@ -238,6 +276,14 @@ public class Test2 {
 
         }
 
+    }
+
+    public void addToArrayListProducts(int turn, String name, int quantity,  double price, double total){
+        mProductArrayList.add(new Product(turn, name, quantity, price, total));
+    }
+
+    public ArrayList<Product> getProductArrayList(){
+        return mProductArrayList;
     }
     public void changePrice (){
 
@@ -304,6 +350,9 @@ public class Test2 {
 
     }
     public double getRequiredMoney(){
+
+
+
         return mRequiredMoney;
     }
 
